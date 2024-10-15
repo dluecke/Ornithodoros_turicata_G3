@@ -147,6 +147,11 @@ df.ScafNSegs$rep <- substr(df.ScafNSegs$library, 2, 2)
 # range of percent segregating
 range(df.ScafNSegs[df.ScafNSegs$scaffold %in% SCAFFOLDS,]$p_seg)
 
+# variant density on chromosome 1 by sex, region
+df.ScafNSegs %>% filter(grepl('NC_088201.1', scaffold)) %>% 
+  group_by(scaffold, sex) %>% 
+  summarise(var_per_kb = mean(p_seg)*1000)
+
 # plot segregation rate by scaffold/sex
 ggplot(data = df.ScafNSegs, aes(x=scaffold, y=p_seg, fill=sex)) + 
   geom_boxplot() + 
